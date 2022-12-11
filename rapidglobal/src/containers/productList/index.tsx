@@ -7,10 +7,10 @@ import Product from "./src/Product";
 
 function ProductList() {
   const { data } = useProduct();
-  // console.log(data?.list);
+  console.log(data);
+
   return (
     <ProductContainer>
-      <Edit />
       {data?.list.map((data) => (
         <Product itemInfo={data} key={data.id} />
       ))}

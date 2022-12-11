@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 import styled from "styled-components";
 import { LoginDTO } from "../../../v1/req/auth/login.req.dto";
@@ -17,19 +18,21 @@ async function useLogin(loginInfo: LoginDTO) {
 function Login() {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
-
+  const router = useRouter();
   const onChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   };
   const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
+  const onClickLogin = () => {
+    useLogin({ name: name, password: password });
+    router.push("/");
+  };
   return (
     <LoginContainer>
       <Name onChange={onChangeName} /> <Password onChange={onChangePassword} />
-      <LoginButton onClick={() => useLogin({ name: name, password: password })}>
-        로그인
-      </LoginButton>
+      <LoginButton onClick={onClickLogin}>로그인</LoginButton>
     </LoginContainer>
   );
 }

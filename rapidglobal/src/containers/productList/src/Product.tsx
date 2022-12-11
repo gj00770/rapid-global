@@ -1,18 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { GetProductListDTO } from "../../../../v1/res/product/get_product_list.res.dto";
+import Edit from "../../../modal/Edit";
 interface Props {
   itemInfo: GetProductListDTO;
 }
 const Product = (props: Props) => {
+  console.log("hi");
   //console.log(props.itemInfo);
+  const [isOpen, setIsOpen] = useState(false);
+  const openCloseHandler = () => {
+    setIsOpen(!isOpen);
+  };
   return (
     <ProductContainer>
       <ThumbnailTitleContainer>
+        {isOpen ? (
+          <Edit openCloseHandler={openCloseHandler} itemInfo={props.itemInfo} />
+        ) : null}
         <Thumbnail src={props.itemInfo.selectedThumbnailUrl} />
         <Title>{props.itemInfo.title}</Title>
       </ThumbnailTitleContainer>
-      <div>편집</div>
+      <div onClick={openCloseHandler}>편집</div>
     </ProductContainer>
   );
 };

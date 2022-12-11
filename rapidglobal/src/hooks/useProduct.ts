@@ -8,7 +8,6 @@
 
 import axios from "axios";
 import { useQuery } from "react-query";
-import { PaginationReqDTO } from "../../v1/req/common/pagination.req.dto";
 import { PaginationResDTO } from "../../v1/res/common/pagination.res.dto";
 import { GetProductListDTO } from "../../v1/res/product/get_product_list.res.dto";
 
@@ -22,6 +21,7 @@ export function useProduct() {
           "http://ec2-52-79-228-35.ap-northeast-2.compute.amazonaws.com:8002/api/v1/product/list",
           {
             headers: { Authorization: `Bearer ${test}` },
+            params: { take: 21 },
           }
         );
         return data;
