@@ -7,13 +7,15 @@
 // // - 2번 문제부터 API 호출 시 header Authorization에 `Bearer ${토큰}` 를 넣어주셔야 합니다.
 
 import axios from "axios";
+import { useRouter } from "next/router";
 import { useQuery } from "react-query";
 import { PaginationResDTO } from "../../v1/res/common/pagination.res.dto";
 import { GetProductListDTO } from "../../v1/res/product/get_product_list.res.dto";
 
-export function useProduct() {
+export function useProduct(page: number) {
+  const router = useRouter();
   const query = useQuery<PaginationResDTO<GetProductListDTO>>(
-    "123",
+    `${page}`,
     async () => {
       const test = localStorage.getItem("accessToken");
       try {
@@ -21,15 +23,19 @@ export function useProduct() {
           "http://ec2-52-79-228-35.ap-northeast-2.compute.amazonaws.com:8002/api/v1/product/list",
           {
             headers: { Authorization: `Bearer ${test}` },
-            params: { take: 21 },
+            params: { take: 10, skip: page },
           }
         );
         return data;
       } catch (err) {
-        return null;
+        if (err.response.status === 401) {
+          alert("로그인해주세요");
+          router.push("/login");
+        }
+        console.log(err);
       }
-    },
-    { refetchOnMount: true }
+    }
+    // { staleTime: 1000 }
   );
 
   return {

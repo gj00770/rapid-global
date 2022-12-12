@@ -24,18 +24,16 @@ const Login = styled.div`
   width: 350px;
   height: 50px;
   margin-bottom: 30px;
-  background-color: #4aa8d8;
-  color: white;
+  background-color: white;
   text-align: center;
-  box-shadow: rgb(0 0 0 / 7%) 0px 3px 4px 0px;
+  box-shadow: rgb(0 0 0 / 40%) 0px 3px 4px 0px;
 `;
 const ProductList = styled.div`
   width: 350px;
   height: 50px;
-  background-color: #4aa8d8;
-  color: white;
+  background-color: white;
   text-align: center;
-  box-shadow: rgb(0 0 0 / 7%) 0px 3px 4px 0px;
+  box-shadow: rgb(0 0 0 / 40%) 0px 3px 4px 0px;
 `;
 const HomeContainer = styled.div`
   font-size: 30px;
@@ -43,6 +41,7 @@ const HomeContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  background-color: #7dd2ff;
   width: 100vw;
   height: 100vh;
 `;

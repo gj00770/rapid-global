@@ -4,9 +4,10 @@ import { GetProductListDTO } from "../../../../v1/res/product/get_product_list.r
 import Edit from "../../../modal/Edit";
 interface Props {
   itemInfo: GetProductListDTO;
+  curPage: number;
 }
 const Product = (props: Props) => {
-  console.log("hi");
+  //console.log("hi");
   //console.log(props.itemInfo);
   const [isOpen, setIsOpen] = useState(false);
   const openCloseHandler = () => {
@@ -16,12 +17,16 @@ const Product = (props: Props) => {
     <ProductContainer>
       <ThumbnailTitleContainer>
         {isOpen ? (
-          <Edit openCloseHandler={openCloseHandler} itemInfo={props.itemInfo} />
+          <Edit
+            openCloseHandler={openCloseHandler}
+            itemInfo={props.itemInfo}
+            curPage={props.curPage}
+          />
         ) : null}
         <Thumbnail src={props.itemInfo.selectedThumbnailUrl} />
         <Title>{props.itemInfo.title}</Title>
       </ThumbnailTitleContainer>
-      <div onClick={openCloseHandler}>편집</div>
+      <EditButton onClick={openCloseHandler}>편집</EditButton>
     </ProductContainer>
   );
 };
@@ -38,11 +43,17 @@ const ThumbnailTitleContainer = styled.div`
   align-items: center;
 `;
 const ProductContainer = styled.div`
-  box-shadow: rgb(0 0 0 / 7%) 0px 3px 4px 0px;
+  background-color: white;
+  box-shadow: rgb(0 0 0 / 40%) 0px 3px 4px 0px;
   width: 80vw;
   display: flex;
   justify-content: space-between;
   margin-bottom: 15px;
   margin-top: 15px;
+  border-radius: 20px;
+`;
+const EditButton = styled.div`
+  cursor: pointer;
+  margin: 9px 9px 0px 0px;
 `;
 export default React.memo(Product);

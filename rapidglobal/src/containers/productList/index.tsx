@@ -3,17 +3,27 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useProduct } from "../../hooks/useProduct";
 import Edit from "../../modal/Edit";
+import PageNum from "./src/PageNum";
 import Product from "./src/Product";
 
 function ProductList() {
-  const { data } = useProduct();
-  console.log(data);
-
+  const [curPage, setCurPage] = useState<number>(0);
+  const { data, refetch } = useProduct(curPage ?? 0);
+  const handleCurPage = (page: number) => {
+    setCurPage(page - 10);
+  };
   return (
     <ProductContainer>
+      <ProductBanner>상품리스트</ProductBanner>
       {data?.list.map((data) => (
-        <Product itemInfo={data} key={data.id} />
+        <Product itemInfo={data} key={data.id} curPage={curPage} />
       ))}
+      <PageNum
+        handleCurPage={handleCurPage}
+        curPage={curPage}
+        refetch={refetch}
+        totalCount={data ? data.totalCount : 0}
+      />
     </ProductContainer>
   );
 }
@@ -24,20 +34,10 @@ const ProductContainer = styled.div`
   justify-content: center;
   align-items: center;
 `;
-const Name = styled.input`
-  width: 300px;
-  margin-top: 50px;
+const ProductBanner = styled.div`
+  color: white;
+  font-size: 37px;
+  margin-top: 12px;
 `;
-const Password = styled.input`
-  width: 300px;
-  margin-top: 30px;
-`;
-const LoginButton = styled.div`
-  background-color: #d3d3d3;
-  margin-top: 30px;
-  width: 300px;
-  height: 30px;
-  text-align: center;
-  line-height: 30px;
-`;
+
 export default ProductList;

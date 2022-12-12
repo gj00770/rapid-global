@@ -30,34 +30,68 @@ function Login() {
     router.push("/");
   };
   return (
-    <LoginContainer>
-      <Name onChange={onChangeName} /> <Password onChange={onChangePassword} />
-      <LoginButton onClick={onClickLogin}>로그인</LoginButton>
-    </LoginContainer>
+    <LoginBackground>
+      <LoginContainer>
+        <InputIdName>ID</InputIdName>
+        <Name onChange={onChangeName} />{" "}
+        <InputPassWordName>Password</InputPassWordName>
+        <Password onChange={onChangePassword} />
+        <LoginButton onClick={onClickLogin}>로그인</LoginButton>
+      </LoginContainer>
+    </LoginBackground>
   );
 }
 
-const LoginContainer = styled.div`
+const LoginBackground = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 80vh;
+  height: 100vh;
+  width: 100vw;
+  background-color: #7dd2ff;
+`;
+const LoginContainer = styled.div`
+  width: 400px;
+  height: 300px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: rgb(0 0 0 / 40%) 5px 5px 10px;
+`;
+const InputIdName = styled.div`
+  margin: 20px 0px 5px 0px;
+  width: 280px;
+`;
+const InputPassWordName = styled.div`
+  margin: 20px 0px 5px 0px;
+  width: 280px;
 `;
 const Name = styled.input`
   width: 300px;
-  margin-top: 50px;
+  height: 30px;
+  background-color: #d3d3d3;
+  border-radius: 30px;
+  border: none;
+  font-size: 22px;
 `;
 const Password = styled.input`
   width: 300px;
-  margin-top: 30px;
+  height: 30px;
+  background-color: #d3d3d3;
+  border-radius: 30px;
+  border: none;
+  font-size: 22px;
 `;
 const LoginButton = styled.div`
-  background-color: #d3d3d3;
-  margin-top: 30px;
+  background-color: #7dd2ff;
+  margin-top: 50px;
   width: 300px;
   height: 30px;
   text-align: center;
   line-height: 30px;
+  border-radius: 30px;
+  color: white;
 `;
 export default Login;

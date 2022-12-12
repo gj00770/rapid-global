@@ -7,22 +7,29 @@ import { useProduct } from "../hooks/useProduct";
 interface Props {
   openCloseHandler: () => void;
   itemInfo: GetProductListDTO;
+  curPage: number;
 }
 async function EditProduct(title: string, id: number) {
   const accessToken = localStorage.getItem("accessToken");
-  await axios.put(
-    `http://ec2-52-79-228-35.ap-northeast-2.compute.amazonaws.com:8002/api/v1/product/${id}`,
-    {
-      title,
-    },
-    {
-      headers: { Authorization: `Bearer ${accessToken}` },
+  try {
+    await axios.put(
+      `http://ec2-52-79-228-35.ap-northeast-2.compute.amazonaws.com:8002/api/v1/product/${id}`,
+      {
+        title,
+      },
+      {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      }
+    );
+  } catch (err) {
+    if (err.status === 401) {
+      alert("다시 로그인해주세요");
     }
-  );
+  }
 }
 function Edit(props: Props) {
   const [title, setTitle] = useState(" ");
-  const { refetch } = useProduct();
+  const { refetch } = useProduct(props.curPage);
   const onClickEdit = () => {
     EditProduct(title, props.itemInfo.id);
     setTimeout(() => refetch(), 1000);
@@ -31,10 +38,11 @@ function Edit(props: Props) {
   return (
     <EditModalBackground>
       <EditContainer>
+        <ModalRequest>제목을 입력해주세요</ModalRequest>
         <CloseButton onClick={props.openCloseHandler}>x</CloseButton>
+        <CurrentTitle>{props.itemInfo.title}</CurrentTitle>
         <Title onChange={(e) => setTitle(e.target.value)} />
-        <div>{props.itemInfo.title}</div>
-        <div onClick={onClickEdit}>버튼</div>
+        <ConfirmButton onClick={onClickEdit}>확인</ConfirmButton>
       </EditContainer>
     </EditModalBackground>
   );
@@ -51,6 +59,10 @@ const EditModalBackground = styled.div`
   align-items: center;
   flex-direction: column;
 `;
+const ModalRequest = styled.div`
+  margin-top: 120px;
+  font-size: 25px;
+`;
 const EditContainer = styled.div`
   position: relative;
   width: 600px;
@@ -58,30 +70,37 @@ const EditContainer = styled.div`
   background-color: white;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+
   align-items: center;
 `;
 const CloseButton = styled.div`
   top: 0;
   right: 6px;
   font-size: 20px;
-
   position: absolute;
 `;
 const Title = styled.input`
-  width: 300px;
-  margin-top: 50px;
-`;
-const Password = styled.input`
-  width: 300px;
-  margin-top: 30px;
-`;
-const LoginButton = styled.div`
+  width: 400px;
+  border: none;
   background-color: #d3d3d3;
-  margin-top: 30px;
-  width: 300px;
   height: 30px;
+  border-radius: 30px;
+  margin-top: 50px;
   text-align: center;
-  line-height: 30px;
+`;
+const CurrentTitle = styled.div`
+  margin-top: 80px;
+  width: 400px;
+  font-size: 24px;
+  text-align: center;
+`;
+const ConfirmButton = styled.div`
+  margin-top: 50px;
+  width: 200px;
+  font-size: 24px;
+  text-align: center;
+  background-color: #7dd2ff;
+  color: white;
+  border-radius: 20px;
 `;
 export default Edit;
