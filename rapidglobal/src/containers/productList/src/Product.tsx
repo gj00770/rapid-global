@@ -45,7 +45,7 @@ const ThumbnailTitleContainer = styled.div`
 const ProductContainer = styled.div`
   background-color: white;
   box-shadow: rgb(0 0 0 / 40%) 0px 3px 4px 0px;
-  width: 80vw;
+  width: 1200px;
   display: flex;
   justify-content: space-between;
   margin-bottom: 15px;

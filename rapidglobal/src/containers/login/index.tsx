@@ -49,7 +49,6 @@ const LoginBackground = styled.div`
   align-items: center;
   height: 100vh;
   width: 100vw;
-  background-color: #7dd2ff;
 `;
 const LoginContainer = styled.div`
   width: 400px;
@@ -75,6 +74,7 @@ const Name = styled.input`
   border-radius: 30px;
   border: none;
   font-size: 22px;
+  text-align: center;
 `;
 const Password = styled.input`
   width: 300px;
@@ -82,6 +82,7 @@ const Password = styled.input`
   background-color: #d3d3d3;
   border-radius: 30px;
   border: none;
+  text-align: center;
   font-size: 22px;
 `;
 const LoginButton = styled.div`
@@ -93,5 +94,6 @@ const LoginButton = styled.div`
   line-height: 30px;
   border-radius: 30px;
   color: white;
+  cursor: pointer;
 `;
 export default Login;

@@ -1,8 +1,6 @@
-import axios from "axios";
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useProduct } from "../../hooks/useProduct";
-import Edit from "../../modal/Edit";
 import PageNum from "./src/PageNum";
 import Product from "./src/Product";
 

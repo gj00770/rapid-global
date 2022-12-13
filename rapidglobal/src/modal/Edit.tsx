@@ -4,34 +4,19 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { GetProductListDTO } from "../../v1/res/product/get_product_list.res.dto";
 import { useProduct } from "../hooks/useProduct";
+import { editProduct } from "../remotes/product/editProduct";
 interface Props {
   openCloseHandler: () => void;
   itemInfo: GetProductListDTO;
   curPage: number;
 }
-async function EditProduct(title: string, id: number) {
-  const accessToken = localStorage.getItem("accessToken");
-  try {
-    await axios.put(
-      `http://ec2-52-79-228-35.ap-northeast-2.compute.amazonaws.com:8002/api/v1/product/${id}`,
-      {
-        title,
-      },
-      {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      }
-    );
-  } catch (err) {
-    if (err.status === 401) {
-      alert("다시 로그인해주세요");
-    }
-  }
-}
+
 function Edit(props: Props) {
   const [title, setTitle] = useState(" ");
   const { refetch } = useProduct(props.curPage);
   const onClickEdit = () => {
-    EditProduct(title, props.itemInfo.id);
+    editProduct(title, props.itemInfo.id);
+    //  EditProduct(title, props.itemInfo.id);
     setTimeout(() => refetch(), 1000);
     props.openCloseHandler();
   };
