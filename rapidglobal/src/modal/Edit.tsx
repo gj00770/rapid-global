@@ -1,5 +1,3 @@
-import axios from "axios";
-import { title } from "process";
 import React, { useState } from "react";
 import styled from "styled-components";
 import { GetProductListDTO } from "../../v1/res/product/get_product_list.res.dto";
@@ -16,7 +14,6 @@ function Edit(props: Props) {
   const { refetch } = useProduct(props.curPage);
   const onClickEdit = () => {
     editProduct(title, props.itemInfo.id);
-    //  EditProduct(title, props.itemInfo.id);
     setTimeout(() => refetch(), 1000);
     props.openCloseHandler();
   };

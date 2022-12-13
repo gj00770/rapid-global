@@ -6,13 +6,17 @@ import { LoginDTO } from "../../../v1/req/auth/login.req.dto";
 import { LoginResultDTO } from "../../../v1/res/auth/login_result.res.dto";
 
 async function useLogin(loginInfo: LoginDTO) {
-  const token = await axios.post<LoginResultDTO>(
-    "http://ec2-52-79-228-35.ap-northeast-2.compute.amazonaws.com:8002/api/v1/auth/login",
-    loginInfo
-  );
-  console.log(token.data.access_token);
-  console.log("accessToken", token.data.access_token);
-  localStorage.setItem("accessToken", token.data.access_token);
+  try {
+    const token = await axios.post<LoginResultDTO>(
+      "http://ec2-52-79-228-35.ap-northeast-2.compute.amazonaws.com:8002/api/v1/auth/login",
+      loginInfo
+    );
+    localStorage.setItem("accessToken", token.data.access_token);
+    console.log(token.status);
+    return token.status;
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 function Login() {
@@ -25,9 +29,12 @@ function Login() {
   const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
-  const onClickLogin = () => {
-    useLogin({ name: name, password: password });
-    router.push("/");
+  const onClickLogin = async () => {
+    const status = await useLogin({ name: name, password: password });
+    await console.log(status);
+    status === 201
+      ? router.push("/")
+      : alert("잘못된 비밀번호 또는 아이디입니다.");
   };
   return (
     <LoginBackground>
