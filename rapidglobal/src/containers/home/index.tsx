@@ -1,14 +1,25 @@
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import styles from "../../../styles/Home.module.css";
+import { useProduct } from "../../hooks/useProduct";
 
 export default function Home() {
   const router = useRouter();
+  const { data } = useProduct(0);
+  const onClickLogOut = () => {
+    localStorage.setItem("accessToken", "");
+    router.push("./login");
+  };
   return (
     <div className={styles.container}>
       <HomeContainer>
         <HomeContainer>
-          <Login onClick={() => router.push(`/login`)}>로그인</Login>
+          {data ? (
+            <Login onClick={onClickLogOut}>로그아웃</Login>
+          ) : (
+            <Login onClick={() => router.push(`/login`)}>로그인</Login>
+          )}
+
           <ProductList onClick={() => router.push(`/productList`)}>
             상품정보
           </ProductList>
